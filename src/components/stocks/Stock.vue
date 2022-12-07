@@ -35,6 +35,8 @@ export default {
                 quantity: this.quantity
             };
             console.log(order);
+            //buyStock is action in modules/stocks
+            this.$store.dispatch('buyStock', order)
             this.quantity = 0;
         }
     }
