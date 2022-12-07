@@ -13,13 +13,12 @@
 <script>
 import Header from './components/Header.vue'
 export default {
-    data() {
-        return {
-
-        }
-    },
     components: {
         appHeader: Header
+    },
+    created() {
+        //first get initStocks from modules/stocks
+        this.$store.dispatch('initStocks')
     }
 };
 </script>
