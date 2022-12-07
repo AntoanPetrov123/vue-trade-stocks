@@ -4,7 +4,7 @@
         <h6>You can Save and Load your Data</h6>
         <h6>Click on 'End Day' to begin a New Day!</h6>
         <hr>
-        <p>Your Balance: {{ funds }}</p>
+        <p>Your Balance: {{ funds.toFixed(2) | currency }}</p>
     </div>
 </template>
 
