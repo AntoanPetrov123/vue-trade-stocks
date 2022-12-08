@@ -12,7 +12,8 @@
                 </ul>
                 <strong class="navbar-text navbar-right">Balance: {{ funds.toFixed(2) | currency }}</strong>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">End Day</a></li>
+                    <li><a href="#" @click="startDay">Start Day</a></li>
+                    <li><a href="#" @click="endDay">End Day</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                             aria-expanded="false">Save/Load Data <span class="caret"></span></a>
@@ -28,10 +29,30 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 export default {
+    data() {
+        return {
+            interval
+        }
+    },
     computed: {
         funds() {
             return this.$store.getters.funds;
+        }
+    },
+    methods: {
+        ...mapActions([
+            //from modules/stocks
+            'randomizeStocks'
+        ]),
+        startDay() {
+            this.interval = setInterval(() => {
+                this.randomizeStocks();
+            }, 10000)
+        },
+        endDay() {
+            clearInterval(this.interval);
         }
     }
 }
