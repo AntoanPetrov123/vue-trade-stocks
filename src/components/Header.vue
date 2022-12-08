@@ -14,7 +14,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#" @click="startDay">Start Day</a></li>
                     <li><a href="#" @click="endDay">End Day</a></li>
-                    <li class="dropdown">
+                    <li class="dropdown" :class="{ open: isDropdownOpen }" @click="toggleDropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                             aria-expanded="false">Save/Load Data <span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -32,8 +32,10 @@
 import { mapActions } from 'vuex';
 export default {
     data() {
+        var interval;
         return {
-            interval
+            isDropdownOpen: false,
+            interval,
         }
     },
     computed: {
@@ -53,6 +55,9 @@ export default {
         },
         endDay() {
             clearInterval(this.interval);
+        },
+        toggleDropdown() {
+            return this.isDropdownOpen = !this.isDropdownOpen;
         }
     }
 }
