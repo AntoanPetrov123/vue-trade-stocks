@@ -8,8 +8,11 @@ const mutations = {
         state.stocks = stocks;
     },
     'RND_STOCKS'(state) {
+        const min = -(Math.random() * 20 + 1);
+        const max = Math.random() * 20 + 1;
         state.stocks.forEach(stock => {
-            stock.price = stock.price * (1 + Math.random() - 0.5);
+            stock.price = stock.price + ((Math.random() * (max - min + 1)) + min);
+            // stock.price = stock.price * (1 + Math.random() - 0.5);
         });
     }
 };

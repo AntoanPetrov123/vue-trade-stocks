@@ -22,6 +22,12 @@
                             <li><a href="#" @click="loadData">Load</a></li>
                         </ul>
                     </li>
+                    <li>
+                        <router-link to="/register">Sign Up</router-link>
+                    </li>
+                    <li>
+                        <router-link to="/login">Sign In</router-link>
+                    </li>
                 </ul>
             </div>
         </div>
