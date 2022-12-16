@@ -17,7 +17,7 @@ Vue.filter('currency', value => {
 })
 
 axios.defaults.baseURL = 'https://vue-trade-stocks-default-rtdb.firebaseio.com/'
-axios.defaults.headers.common['Authorization'] = 'something';
+// axios.defaults.headers.common['Authorization'] = 'something';
 axios.defaults.headers.get['Accepts'] = 'application/json';
 
 const reqInterceptor = axios.interceptors.request.use(config => {
