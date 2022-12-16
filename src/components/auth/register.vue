@@ -97,7 +97,7 @@ export default {
                 terms: this.terms
             }
             console.log(formData)
-            this.$store.dispatch('register', { email: formData.email, password: formData.password });
+            this.$store.dispatch('register', formData);
         }
     }
 }
