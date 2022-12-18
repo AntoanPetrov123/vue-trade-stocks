@@ -29,6 +29,9 @@
                     <li v-if="!auth">
                         <router-link to="/login">Sign In</router-link>
                     </li>
+                    <li v-if="auth">
+                        <button @click="onLogout" class="logout">Logout</button>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -83,7 +86,24 @@ export default {
         },
         loadData() {
             this.fetchData();
+        },
+        onLogout() {
+            this.$store.dispatch('logout');
         }
     }
 }
 </script>
+<style>
+.logout {
+    background-color: transparent;
+    margin-top: 12.5px;
+    border: none;
+    font: inherit;
+    cursor: pointer;
+    color: #777;
+}
+
+.logout:hover {
+    color: rgb(0, 0, 0);
+}
+</style>

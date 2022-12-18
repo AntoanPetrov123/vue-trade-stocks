@@ -1,7 +1,7 @@
 import globalAxios from 'axios';
 
 import axios from '../../axios-auth';
-
+import router from '../../main';
 
 const state = {
     idToken: null,
@@ -16,6 +16,10 @@ const mutations = {
     },
     storeUser(state, user) {
         state.user = user;
+    },
+    clearAuthData(state) {
+        state.idToken = null;
+        state.userId = null;
     }
 };
 
@@ -34,6 +38,7 @@ const actions = {
                     userId: res.data.localId
                 });
                 dispatch('storeUser', authData);
+                router.replace('/stocks');
             })
             .catch(err => console.log(err));
     },
@@ -50,8 +55,16 @@ const actions = {
                     token: res.data.idToken,
                     userId: res.data.localId
                 })
+                router.replace('/stocks');
+
             })
             .catch(err => console.log(err));
+    },
+    logout({ commit, state }) {
+        console.log(router);
+        commit('clearAuthData');
+
+        router.replace('/login');
     },
     storeUser({ commit, state }, userData) {
         if (!state.idToken) {

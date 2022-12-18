@@ -13,14 +13,15 @@ export const routes = [
         path: '/portfolio',
         component: Portfolio,
         beforeEnter(to, from, next) {
-            if (store.state.idToken) {
+            console.log(store.state.token.idToken);
+            if (store.state.token.idToken) {
                 next();
             } else {
-                next('/register');
+                next('/login');
             }
         }
     },
     { path: '/register', component: Register },
     { path: '/login', component: Login },
     { path: '/stocks', component: Stocks },
-]
+];
