@@ -20,7 +20,8 @@ export default {
     },
     created() {
         //first get initStocks from modules/stocks
-        this.$store.dispatch('initStocks')
+        this.$store.dispatch('initStocks');
+        this.$store.dispatch('autoLogin');
     }
 };
 </script>

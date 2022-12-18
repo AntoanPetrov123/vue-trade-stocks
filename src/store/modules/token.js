@@ -42,6 +42,14 @@ const actions = {
                     token: res.data.idToken,
                     userId: res.data.localId
                 });
+
+                //set auto login 
+                const now = new Date();
+                const expirationDate = new Date(now.getTime() + (res.data.expiresIn * 1000));
+                localStorage.setItem('token', res.data.idToken);
+                localStorage.setItem('userId', res.data.localId);
+                localStorage.setItem('expirationDate', expirationDate);
+
                 dispatch('storeUser', authData);
                 //auto logout after some time
                 dispatch('setLogoutTimer', res.data.expiresIn);
@@ -61,17 +69,39 @@ const actions = {
                 commit('authUser', {
                     token: res.data.idToken,
                     userId: res.data.localId
-                })
+                });
+                //set auto login 
+                const now = new Date();
+                const expirationDate = new Date(now.getTime() + (res.data.expiresIn * 1000));
+                localStorage.setItem('token', res.data.idToken);
+                localStorage.setItem('userId', res.data.localId);
+                localStorage.setItem('expirationDate', expirationDate);
+
                 router.replace('/stocks');
                 //auto logout after some time
                 dispatch('setLogoutTimer', res.data.expiresIn);
             })
             .catch(err => console.log(err));
     },
+    autoLogin({ commit }) {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            return;
+        }
+        const expirationDate = localStorage.getItem('expirationDate');
+        const now = new Date();
+        if (now >= expirationDate) {
+            return;
+        }
+        const userId = localStorage.getItem('userId');
+        commit('authUser', { token, userId })
+    },
     logout({ commit, state }) {
         console.log(router);
         commit('clearAuthData');
-
+        localStorage.removeItem('expirationDate');
+        localStorage.removeItem('token');
+        localStorage.removeItem('userId');
         router.replace('/login');
     },
     storeUser({ commit, state }, userData) {
