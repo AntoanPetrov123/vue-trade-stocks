@@ -7,14 +7,15 @@
 
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <router-link to="/portfolio" activeClass="active" tag="li"><a>Portfolio</a></router-link>
+                    <router-link to="/portfolio" activeClass="active" tag="li"
+                        v-if="auth"><a>Portfolio</a></router-link>
                     <router-link to="/stocks" activeClass="active" tag="li"><a>Stocks</a></router-link>
                 </ul>
                 <strong class="navbar-text navbar-right">Balance: {{ funds.toFixed(2) | currency }}</strong>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#" @click="startDay">Start Day</a></li>
-                    <li><a href="#" @click="endDay">End Day</a></li>
-                    <li class="dropdown" :class="{ open: isDropdownOpen }" @click="toggleDropdown">
+                    <li v-if="auth"><a href="#" @click="startDay">Start Day</a></li>
+                    <li v-if="auth"><a href="#" @click="endDay">End Day</a></li>
+                    <li class="dropdown" :class="{ open: isDropdownOpen }" @click="toggleDropdown" v-if="auth">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                             aria-expanded="false">Save/Load Data <span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -22,10 +23,10 @@
                             <li><a href="#" @click="loadData">Load</a></li>
                         </ul>
                     </li>
-                    <li>
+                    <li v-if="!auth">
                         <router-link to="/register">Sign Up</router-link>
                     </li>
-                    <li>
+                    <li v-if="!auth">
                         <router-link to="/login">Sign In</router-link>
                     </li>
                 </ul>
@@ -44,9 +45,15 @@ export default {
             interval,
         }
     },
+    created() {
+        this.$store.dispatch('fetchUser')
+    },
     computed: {
         funds() {
-            return this.$store.getters.funds;
+            return !this.$store.getters.user ? 0 : +this.$store.getters.user.balance;
+        },
+        auth() {
+            return this.$store.getters.isAuth;
         }
     },
     methods: {

@@ -93,6 +93,9 @@ const actions = {
 const getters = {
     user(state) {
         return state.user;
+    },
+    isAuth(state) {
+        return state.idToken !== null;
     }
 };
 

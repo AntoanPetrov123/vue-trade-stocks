@@ -10,10 +10,13 @@
 
 <script>
 export default {
+    created() {
+        this.$store.dispatch('fetchUser')
+    },
     computed: {
         funds() {
-            return this.$store.getters.funds;
+            return !this.$store.getters.user ? 0 : +this.$store.getters.user.balance;
         }
-    }
+    },
 }
 </script>
