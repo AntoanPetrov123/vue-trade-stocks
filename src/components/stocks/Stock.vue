@@ -36,18 +36,23 @@ export default {
         },
         insufficientFunds() {
             return this.quantity * this.stock.price > this.funds;
-        }
+        },
+        userId() {
+            return this.$store.getters.firebaseUserId;
+        },
     },
     methods: {
         buyStock() {
             const order = {
                 stockId: this.stock.id,
+                stockName: this.stock.name,
                 stockPrice: this.stock.price,
                 quantity: this.quantity
             };
             console.log(order);
             //buyStock is action in modules/stocks
-            this.$store.dispatch('buyStock', order)
+            this.$store.dispatch('buyStock', order);
+            // this.$http.put('users/' + this.userId + '.json', order);
             this.quantity = 0;
         }
     }

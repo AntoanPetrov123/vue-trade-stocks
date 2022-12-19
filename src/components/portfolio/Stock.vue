@@ -3,8 +3,9 @@
         <div class="panel panel-info">
             <div class="panel-heading">
                 <h3 class="panel-title">
-                    {{ stock.name }}
-                    <small>(Price: {{ stock.price }} | Quantity: {{ stock.quantity }})</small>
+                    {{ stock.stockName }}
+                    <small>(Price: {{ stock.stockPrice.toFixed(2) | currency }} | Quantity: {{ stock.quantity
+                    }})</small>
                 </h3>
             </div>
             <div class="panel-body">
@@ -32,22 +33,22 @@ export default {
             quantity: 0
         }
     },
+    created() {
+        this.$store.dispatch('fetchUser')
+    },
     computed: {
         insufficientQuantity() {
             return this.quantity > this.stock.quantity;
         }
     },
     methods: {
-        //get action with the same name sellStock
-        // ...mapActions([
-        //     'sellStock'
-        // ]),
         ...mapActions({
             placeSellOrder: 'sellStock'
         }),
         sellStock() {
             const order = {
                 stockId: this.stock.id,
+                // stockName: this.stock.name,
                 stockPrice: this.stock.price,
                 quantity: this.quantity
             };

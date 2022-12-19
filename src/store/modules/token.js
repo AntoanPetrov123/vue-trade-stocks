@@ -53,7 +53,7 @@ const actions = {
                 dispatch('storeUser', authData);
                 //auto logout after some time
                 dispatch('setLogoutTimer', res.data.expiresIn);
-                router.replace('/stocks');
+                router.replace('/portfolio');
             })
             .catch(err => console.log(err));
     },
@@ -77,7 +77,7 @@ const actions = {
                 localStorage.setItem('userId', res.data.localId);
                 localStorage.setItem('expirationDate', expirationDate);
 
-                router.replace('/stocks');
+                router.replace('/portfolio');
                 //auto logout after some time
                 dispatch('setLogoutTimer', res.data.expiresIn);
             })
@@ -102,6 +102,7 @@ const actions = {
         localStorage.removeItem('expirationDate');
         localStorage.removeItem('token');
         localStorage.removeItem('userId');
+        localStorage.removeItem('firebase-id');
         router.replace('/login');
     },
     storeUser({ commit, state }, userData) {
@@ -132,6 +133,8 @@ const actions = {
                     console.log(user.username);
                     this.username = user.username;
                 }
+                localStorage.setItem('firebase-id', users[0].id);
+
                 console.log(users[0], 'user');
                 commit('storeUser', users[0])
             })
