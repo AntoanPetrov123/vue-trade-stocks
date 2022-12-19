@@ -2,11 +2,13 @@ import Vue from 'vue'
 import VueRouter from 'vue-router';
 import VueResource from 'vue-resource';
 import axios from 'axios';
+import Vuelidate from 'vuelidate';
 
 import App from './App.vue'
 import { routes } from './routes';
 import store from './store/store';
 
+Vue.use(Vuelidate);
 Vue.use(VueRouter);
 Vue.use(VueResource);
 
