@@ -72,6 +72,7 @@
   
 <script>
 import { required, email, numeric, minValue, minLength, sameAs, requiredUnless, maxValue } from 'vuelidate/lib/validators';
+import axios from 'axios';
 
 export default {
     data() {
@@ -93,7 +94,18 @@ export default {
         },
         email: {
             required,
-            email
+            email,
+            //custom validator for unique email
+            unique: val => {
+                if (val == '') {
+                    return true;
+                }
+                return axios.get('/users.json?orderBy="email"&equalTo="' + val + '"')
+                    .then(res => {
+                        console.log(res);
+                        return Object.keys(res.data).length === 0; //if empty object, so email is free
+                    })
+            }
         },
         age: {
             required,
